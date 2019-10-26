@@ -29,4 +29,6 @@ a web app to help users with organizing their characters and weapons for tableto
 
 ### REFRENCES ###
  
-the labs provided by David Drohan were of great assistence (https://tutors-design.netlify.com/)
+* the labs provided by David Drohan were of great assistence (https://tutors-design.netlify.com/)
+
+* vidio of app in action (https://www.youtube.com/watch?v=jWPcs4ykOYI&feature=youtu.be)
