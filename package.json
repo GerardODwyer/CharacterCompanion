@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --exit",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -22,7 +22,7 @@
     "morgan": "~1.9.1"
   },
   "devDependencies": {
-    "chai": "^4.0.2",
+    "chai": "^4.0.2s",
     "mocha": "^6.2.0",
     "mongodb-uri": "^0.9.7",
     "supertest": "^4.0.2"

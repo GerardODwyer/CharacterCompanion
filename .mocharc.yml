@@ -1,0 +1,4 @@
+file:
+ - test/functional/api/characterTest.js
+timeout: 10000
+

@@ -1,5 +1,0 @@
-file:
- - test/functional/api/characterTest.js
- require: '@babel/register'
-timeout: 10000
-
