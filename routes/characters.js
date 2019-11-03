@@ -3,8 +3,7 @@ let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
 
-var mongodbUri ="mongodb+srv://Gerard:Firedrake77@wit-charactercompanion-cluster-rs4nt.mongodb.net/CharacterCompanion?retryWrites=true&w=majority"
-
+var mongodbUri ="mongodb+srv://Gerard:Firedrake77@wit-charactercompanion-cluster-rs4nt.mongodb.net/CharacterCompanion?retryWrites=true&w=majority\n"
 mongoose.connect(mongodbUri);
 
 let db = mongoose.connection;

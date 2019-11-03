@@ -12,6 +12,7 @@
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "lodash": "^4.17.15",
     "mongo": "^0.1.0",
     "mongo-db": "^1.0.2",
     "mongodb": "^3.3.3",
@@ -20,6 +21,9 @@
     "morgan": "~1.9.1"
   },
   "devDependencies": {
-    "mongodb-uri": "^0.9.7"
+    "chai": "^4.0.2",
+    "mocha": "^6.2.0",
+    "mongodb-uri": "^0.9.7",
+    "supertest": "^4.0.2"
   }
 }
