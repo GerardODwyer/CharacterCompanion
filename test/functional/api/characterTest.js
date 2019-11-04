@@ -59,6 +59,24 @@ describe("Characters", () => {
                     });
             });
         });
+    });
+
+     //    describe("when the id is invalid", () => {
+     //        it("should return the NOT found message", done => {
+     //            request(server)
+     //                .get("/characters/5dbfff991c9d4400000d7da7")
+     //                .set("Accept", "application/json")
+     //                .expect("Content-Type", /json/)
+     //                .expect(200)
+     //                .expect({message: "Character NOT Found!"}, (err, res) => {
+     //                    done(err);
+     //                });
+     //         });
+
+
+
+
+
         // describe("GET /characters/:id", () => {
         //     describe("when the id is valid", () => {
         //         it("should return the matching character", done => {
@@ -73,20 +91,11 @@ describe("Characters", () => {
         //                 });
         //         });
         //     });
-//         describe("when the id is invalid", () => {
-//             it("should return the NOT found message", done => {
-//                 request(server)
-//                     .get("/characters/5dbfff991c9d4400000d7da7")
-//                     .set("Accept", "application/json")
-//                     .expect("Content-Type", /json/)
-//                     .expect(200)
-//                     .expect({message: "Character NOT Found!"}, (err, res) => {
-//                         done(err);
-//                     });
-//             });
-//         });
-//     });
-    });
+
+
+
+
+
 
     const testCharacter = new Character({
         _id: "5db4a28321ebfc0fe0a03256",
@@ -95,3 +104,4 @@ describe("Characters", () => {
         level: 7
     });
 });
+
