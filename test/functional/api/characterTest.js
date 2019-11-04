@@ -60,6 +60,47 @@ describe("Characters", () => {
             });
         });
     });
+// describe("POST /character", () => {
+//     it("should return confirmation message and update datastore", () => {
+//         const character = {
+//             upvotes: 4,
+//             CharacterName: "Gerard",
+//             level: 7
+//         };
+//         return request(server)
+//             .post("/characters")
+//             .send(character)
+//             .expect(200)
+//             .expect({ message: "Character Added!" });
+//     });
+
+
+
+    const testCharacter = new Character({
+        _id: "5db4a28321ebfc0fe0a03256",
+        upvotes: 4,
+        CharacterName: "Gerard",
+        level: 7
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
      //    describe("when the id is invalid", () => {
      //        it("should return the NOT found message", done => {
@@ -97,11 +138,4 @@ describe("Characters", () => {
 
 
 
-    const testCharacter = new Character({
-        _id: "5db4a28321ebfc0fe0a03256",
-        upvotes: 4,
-        CharacterName: "Gerard",
-        level: 7
-    });
-});
 
