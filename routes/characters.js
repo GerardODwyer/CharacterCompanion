@@ -100,6 +100,6 @@ router.deleteCharacter = (req, res) => {
         else
             res.json({ message: 'this character was deleted '});
     });
-}
+};
 
 module.exports = router;
