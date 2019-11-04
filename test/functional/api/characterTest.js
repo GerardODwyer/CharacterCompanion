@@ -4,6 +4,8 @@ const expect = chai.expect;
 const request = require("supertest");
 const _ = require("lodash");
 
+let db, validID;
+
 let Character = require("../../../models/characters");
 
 //
@@ -41,32 +43,36 @@ describe("Characters", () => {
                 });
         });
     });
-
-
-// .end((err, res) => {
-//     expect(res.body).to.be.a("array");
-//     expect(res.body.length).to.equal(2);
-//     const result = _.map(res.body, character => {
-//         return { id: character.id};
-//     });
-//     expect(result).to.deep.include({_id: "5db464721c9d4400000181d3"});
-//     expect(result).to.deep.include({_id: "5db4a28321ebfc0fe0a03256"});
-//     done(err);
-// });
-//     describe("GET /characters/:id", () => {
-//         describe("when the id is valid", () => {
-//             it("should return the matching character", done => {
-//                 request(server)
-//                     .get(`/characters/${testCharacter._id}`)
-//                     .set("Accept", "application/json")
-//                     .expect("Content-Type", /json/)
-//                     .expect(200)
-//                     .end((err, res) => {
-//                         expect(res.body).to.deep.include(testCharacter);
-//                         done(err);
-//                     });
-//             });
-//         });
+    describe("GET /characters/:id", () => {
+        describe("when the id is valid", () => {
+            it("should return the matching characters", async () => {
+                request(server)
+                    .get(`/characters/5db4a28321ebfc0fe0a03256`)
+                    .set("Accept", "application/json")
+                    .expect("Content-Type", /json/)
+                    .expect(200)
+                    .then( res => {
+                        const characters = JSON.parse(res.text);
+                        expect(characters).to.have.length(1);
+                        expect(characters[0]._id).to.equal(testCharacter._id.toString());
+                        done(err);
+                    });
+            });
+        });
+        // describe("GET /characters/:id", () => {
+        //     describe("when the id is valid", () => {
+        //         it("should return the matching character", done => {
+        //             request(server)
+        //                 .get(`/characters/${testCharacter._id}`)
+        //                 .set("Accept", "application/json")
+        //                 .expect("Content-Type", /json/)
+        //                 .expect(200)
+        //                 .then((err, res) => {
+        //                     expect(res.body).to.deep.include(testCharacter);
+        //                     done(err);
+        //                 });
+        //         });
+        //     });
 //         describe("when the id is invalid", () => {
 //             it("should return the NOT found message", done => {
 //                 request(server)
@@ -80,11 +86,12 @@ describe("Characters", () => {
 //             });
 //         });
 //     });
-});
+    });
 
-const testCharacter = new Character({
-    _id: "5db4a28321ebfc0fe0a03256",
-    upvotes: 4,
-    CharacterName: "Gerard",
-    level: 7
+    const testCharacter = new Character({
+        _id: "5db4a28321ebfc0fe0a03256",
+        upvotes: 4,
+        CharacterName: "Gerard",
+        level: 7
+    });
 });
