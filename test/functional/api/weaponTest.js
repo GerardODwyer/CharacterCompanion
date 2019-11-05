@@ -1,17 +1,17 @@
-const chai = require("chai");
-const server = require("../../../bin/www");
-const expect = chai.expect;
-const request = require("supertest");
-const _ = require("lodash");
+const chai = require("chai")
+const server = require("../../../bin/www")
+const expect = chai.expect
+const request = require("supertest")
+const _ = require("lodash")
 
-let db, validID;
+let db, validID
 
-let Weapon = require("../../../models/weapons");
+let Weapon = require("../../../models/weapons")
 
 //
 describe("Weapons", () => {
     beforeEach(async () => {
-        await Weapon.deleteMany({});
+        await Weapon.deleteMany({})
         // datastore.push({
         //     _id: "5db4a28321ebfc0fe0a03256",
         //     upvotes: 4,
@@ -19,14 +19,14 @@ describe("Weapons", () => {
         //     level: 7
         //
         // });
-        await Weapon.create(testWeapon);
-        // datastore.push({
-        //     _id: "5dbfff991c9d4400000d7da7",
-        //     upvotes: 2,
-        //     CharacterName: "GerardTwo",
-        //     level: 49
-        // });
-    });
+        await Weapon.create(testWeapon)
+    // datastore.push({
+    //     _id: "5dbfff991c9d4400000d7da7",
+    //     upvotes: 2,
+    //     CharacterName: "GerardTwo",
+    //     level: 49
+    // });
+    })
 
     describe("GET /weapons", () => {
         it("should return all the weapons", async () => {
@@ -36,31 +36,31 @@ describe("Weapons", () => {
                 .expect("Content-Type", /json/)
                 .expect(200)
                 .then(res => {
-                    const weapons = JSON.parse(res.text);
-                    expect(weapons).to.have.length(1);
-                    expect(weapons[0]._id).to.equal(testWeapon._id.toString());
-                    expect(weapons[0].WeaponName).to.equal(testWeapon.WeaponName);
-                });
-        });
-    });
+                    const weapons = JSON.parse(res.text)
+                    expect(weapons).to.have.length(1)
+                    expect(weapons[0]._id).to.equal(testWeapon._id.toString())
+                    expect(weapons[0].WeaponName).to.equal(testWeapon.WeaponName)
+                })
+        })
+    })
 
     describe("GET /weapon/:id", () => {
         describe("when the id is valid", () => {
             it("should return the matching weapons", async () => {
                 request(server)
-                    .get(`/weapons/5db4a28321ebfc0fe0a03256`)
+                    .get("/weapons/5db4a28321ebfc0fe0a03256")
                     .set("Accept", "application/json")
                     .expect("Content-Type", /json/)
                     .expect(200)
                     .then( res => {
-                        const weapons = JSON.parse(res.text);
-                        expect(weapons).to.have.length(1);
-                        expect(weapons[0]._id).to.equal(testWeapon._id.toString());
-                        done(err);
-                    });
-            });
-        });
-    });
+                        const weapons = JSON.parse(res.text)
+                        expect(weapons).to.have.length(1)
+                        expect(weapons[0]._id).to.equal(testWeapon._id.toString())
+                        done(err)
+                    })
+            })
+        })
+    })
     // describe("POST /weapon", () => {
     //     it("should return confirmation message and update testWeapon", () => {
     //         const weapon = {
@@ -83,6 +83,6 @@ describe("Weapons", () => {
         WeaponName: "ice sword",
         PowerBonus: 12,
         Design: "a cool sword"
-    });
-});
+    })
+})
 

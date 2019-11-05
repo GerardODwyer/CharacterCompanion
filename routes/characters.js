@@ -1,11 +1,11 @@
-let characters = require('../models/characters');
-let express = require('express');
-let router = express.Router();
-let mongoose = require('mongoose');
+let characters = require("../models/characters")
+let express = require("express")
+let router = express.Router()
+let mongoose = require("mongoose")
 
-var mongodbUri ="mongodb+srv://Gerard:Firedrake77@wit-charactercompanion-cluster-rs4nt.mongodb.net/CharacterCompanion?retryWrites=true&w=majority\n"
+let mongodbUri ="mongodb+srv://Gerard:Firedrake77@wit-charactercompanion-cluster-rs4nt.mongodb.net/CharacterCompanion?retryWrites=true&w=majority\n"
 
-mongoose.connect(mongodbUri, { useNewUrlParser: true });
+mongoose.connect(mongodbUri, { useNewUrlParser: true })
 
 mongoose
     .connect(mongodbUri, {
@@ -13,40 +13,40 @@ mongoose
         useNewUrlParser: true,
     })
     .catch(err => {
-        console.log(err.message);
-    });
+        console.log(err.message)
+    })
 
 
-let db = mongoose.connection;
+let db = mongoose.connection
 
-db.on('error', function (err) {
-    console.log('Unable to Connect to [ ' + db.name + ' ]', err);
-});
+db.on("error", function (err) {
+    console.log("Unable to Connect to [ " + db.name + " ]", err)
+})
 
-db.once('open', function () {
-    console.log('Successfully Connected to [ ' + db.name + ' ]');
-});
+db.once("open", function () {
+    console.log("Successfully Connected to [ " + db.name + " ]")
+})
 
 
 router.findAll = (req, res) => {
     // Return a JSON representation of our list
-    res.setHeader('Content-Type', 'application/json');
+    res.setHeader("Content-Type", "application/json")
 
     characters.find(function(err, characters) {
         if (err)
-            res.send(err);
+            res.send(err)
 
-        res.send(JSON.stringify(characters,null,5));
-    });
+        res.send(JSON.stringify(characters,null,5))
+    })
 }
 
 router.findOne = function(req, res) {
 
-    res.setHeader('Content-Type', 'application/json');
+    res.setHeader("Content-Type", "application/json")
 
     characters.findOne({ _id: req.params.id }, function(err, character) {
-        if (err) res.json({ message: "Character NOT Found!", errmsg: err });
-        else res.json(character);
+        if (err) res.json({ message: "Character NOT Found!", errmsg: err })
+        else res.json(character)
     })
 
     // characters.findOne({ "_id" : req.params.id })
@@ -56,64 +56,64 @@ router.findOne = function(req, res) {
     //     .catch(() => {
     //         res.json( 'this character can not be found are you sure this is correct?'  );
     //     });
-};
+}
 
 function getTotalVotes(array) {
-    let totalVotes = 0;
-    array.forEach(function(obj) { totalVotes += obj.upvotes; });
-    return totalVotes;
+    let totalVotes = 0
+    array.forEach(function(obj) { totalVotes += obj.upvotes })
+    return totalVotes
 }
 router.addCharacter = (req, res) => {
 
-    res.setHeader('Content-Type', 'application/json');
+    res.setHeader("Content-Type", "application/json")
 
-    let character = new characters();
+    let character = new characters()
 
-    character.CharacterName =  req.body.CharacterName;
-        character.level =  req.body.level;
+    character.CharacterName =  req.body.CharacterName
+    character.level =  req.body.level
 
-            character.save(function(err) {
-                if (err)
-                    res.json( 'this character was not  added there may be an error!'  );
-                else
-                    res.json({message: 'Character Successfully Added!', data: character });
-            });
+    character.save(function(err) {
+        if (err)
+            res.json( "this character was not  added there may be an error!"  )
+        else
+            res.json({message: "Character Successfully Added!", data: character })
+    })
 }
 router.findTotalVotes = (req, res) => {
 
     characters.find(function(err, donations) {
         if (err)
-            res.send(err);
+            res.send(err)
         else
-            res.json({ totalvotes : getTotalVotes(donations) });
-    });
+            res.json({ totalvotes : getTotalVotes(donations) })
+    })
 }
 
 router.incrementUpvotes = (req, res) => {
 
     characters.findById(req.params.id, function(err,character) {
         if (err)
-            res.json({ message: 'this character dose not exist', errmsg : err } );
+            res.json({ message: "this character dose not exist", errmsg : err } )
         else {
-            character.upvotes += 1;
+            character.upvotes += 1
             character.save(function (err) {
                 if (err)
-                    res.json({ message: 'this character cant be upvoted', errmsg : err } );
+                    res.json({ message: "this character cant be upvoted", errmsg : err } )
                 else
-                    res.json({ message: 'character got an upvote', data: character});
-            });
+                    res.json({ message: "character got an upvote", data: character})
+            })
         }
-    });
+    })
 }
 
 router.deleteCharacter = (req, res) => {
 
     characters.findByIdAndRemove(req.params.id, function(err) {
         if (err)
-            res.json({ message: 'this character was not deleted there is an error', errmsg : err } );
+            res.json({ message: "this character was not deleted there is an error", errmsg : err } )
         else
-            res.json({ message: 'this character was deleted '});
-    });
-};
+            res.json({ message: "this character was deleted "})
+    })
+}
 
-module.exports = router;
+module.exports = router
