@@ -7,4 +7,4 @@ let characterSchema = new mongoose.Schema({
     },
     { collection: 'Characters' });
 
-module.exports = mongoose.model('characters', characterSchema);
+module.exports = mongoose.model('Characters', characterSchema);

@@ -4,7 +4,18 @@ let router = express.Router();
 let mongoose = require('mongoose');
 
 var mongodbUri ="mongodb+srv://Gerard:Firedrake77@wit-charactercompanion-cluster-rs4nt.mongodb.net/CharacterCompanion?retryWrites=true&w=majority\n"
-mongoose.connect(mongodbUri);
+
+mongoose.connect(mongodbUri, { useNewUrlParser: true });
+
+mongoose
+    .connect(mongodbUri, {
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
+    })
+    .catch(err => {
+        console.log(err.message);
+    });
+
 
 let db = mongoose.connection;
 
@@ -29,21 +40,24 @@ router.findAll = (req, res) => {
     });
 }
 
-function getByValue(array, id) {
-    var result  = array.filter(function(obj){return obj.id == id;} );
-    return result ? result[0] : null; // or undefined
-}
-router.findOne = (req, res) => {
+router.findOne = function(req, res) {
 
     res.setHeader('Content-Type', 'application/json');
 
-    characters.find({ "_id" : req.params.id },function(err, character) {
-        if (err)
-            res.json( 'this character can not be found are you sure this is correct?'  );
-        else
-            res.send(JSON.stringify(character,null,5));
-    });
-}
+    characters.findOne({ _id: req.params.id }, function(err, character) {
+        if (err) res.json({ message: "Character NOT Found!", errmsg: err });
+        else res.json(character);
+    })
+
+    // characters.findOne({ "_id" : req.params.id })
+    //     .then(character => {
+    //         res.send(character);
+    //     })
+    //     .catch(() => {
+    //         res.json( 'this character can not be found are you sure this is correct?'  );
+    //     });
+};
+
 function getTotalVotes(array) {
     let totalVotes = 0;
     array.forEach(function(obj) { totalVotes += obj.upvotes; });

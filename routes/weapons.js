@@ -5,7 +5,7 @@ let mongoose = require('mongoose');
 let uriUtil = require('mongodb-uri');
 
 
-var mongodbUri ="mongodb+srv://Gerard:Firedrake77@wit-charactercompanion-cluster-rs4nt.mongodb.net/CharacterCompanion?retryWrites=true&w=majority"
+var mongodbUri = "mongodb+srv://Gerard:Firedrake77@wit-charactercompanion-cluster-rs4nt.mongodb.net/CharacterCompanion?retryWrites=true&w=majority"
 
 mongoose.connect(mongodbUri);
 
@@ -22,27 +22,31 @@ db.once('open', function () {
 router.findAllWeapons = (req, res) => {
     res.setHeader('Content-Type', 'application/json');
 
-    weapons.find(function(err, weapons) {
-        if (err)
+    weapons.find({})
+        .then(weapons => {
+            res.send(JSON.stringify(weapons, null, 5));
+        })
+        .catch(err => {
             res.send(err);
-
-        res.send(JSON.stringify(weapons,null,5));
-    });
-}
+        });
+};
 
 function getByValue(array, id) {
-    var result  = array.filter(function(obj){return obj.id == id;} );
+    var result = array.filter(function (obj) {
+        return obj.id == id;
+    });
     return result ? result[0] : null; // or undefined
 }
+
 router.findOneWeapon = (req, res) => {
 
     res.setHeader('Content-Type', 'application/json');
 
-    weapons.find({ "_id" : req.params.id },function(err, weapon) {
+    weapons.find({"_id": req.params.id}, function (err, weapon) {
         if (err)
-            res.json( 'this weapon can not be found are you sure this is correct?'  );
+            res.json('this weapon can not be found are you sure this is correct?');
         else
-            res.send(JSON.stringify(weapon,null,5));
+            res.send(JSON.stringify(weapon, null, 5));
     });
 }
 
@@ -52,25 +56,25 @@ router.addWeapon = (req, res) => {
 
     let weapon = new weapons();
 
-    weapon.WeaponName =  req.body.WeaponName;
-    weapon.PowerBonus =  req.body.PowerBonus;
-    weapon.Design =  req.body.Design;
+    weapon.WeaponName = req.body.WeaponName;
+    weapon.PowerBonus = req.body.PowerBonus;
+    weapon.Design = req.body.Design;
 
-    weapon.save(function(err) {
+    weapon.save(function (err) {
         if (err)
-            res.json( 'this weapon was not  added there may be an error!'  );
+            res.json('this weapon was not  added there may be an error!');
         else
-            res.json({message: 'Weapon Successfully Added!', data: weapon });
+            res.json({message: 'Weapon Successfully Added!', data: weapon});
     });
 }
 
 router.deleteWeapon = (req, res) => {
 
-    weapons.findByIdAndRemove(req.params.id, function(err) {
+    weapons.findByIdAndRemove(req.params.id, function (err) {
         if (err)
-            res.json({ message: 'this weapon was not deleted there is an error', errmsg : err } );
+            res.json({message: 'this weapon was not deleted there is an error', errmsg: err});
         else
-            res.json({ message: 'this weapon was deleted '});
+            res.json({message: 'this weapon was deleted '});
     });
 }
 
