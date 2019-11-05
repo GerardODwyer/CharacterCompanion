@@ -45,6 +45,7 @@ describe("Characters", () => {
                 });
         });
     });
+    //get new character test
 describe("POST /character", () => {
     it("should return confirmation message and update testCharacter", () => {
         const character = {
